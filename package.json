@@ -1,0 +1,20 @@
+{
+  "name": "image-search-abstraction-layer",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.30",
+    "request": "^2.81.0",
+    "cheerio": "^0.22.0"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "4.4.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShalaQweghen/image_search_abstraction_layer.git"
+  }
+}

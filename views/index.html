@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <title>Image Search Abstraction Layer Challenge | Free Code Camp</title>
+      <link rel="shortcut icon" href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico" type="image/x-icon"/>
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+      <link href="/public/style.css" rel="stylesheet" type="text/css">
+   </head>
+
+   <body>
+     <h1>Image Search Abstraction Layer</h1>
+     <h3>Example usage:</h3>
+     <code>https://happy-bison.glitch.me/api/imagesearch/kitten</code><br/>
+     <code>https://happy-bison.glitch.me/api/imagesearch/kitten?offset=10</code><br/>
+     <code>https://happy-bison.glitch.me/api/latest/imagesearch</code>
+     <h3>Example output</h3>
+     <code>[
+       {"url":"https://static1.squarespace.com/static/54e8ba93e4b07c3f655b452e/t/56c2a04520c64707756f4267/1493764650017/","snippet":"Kitten Lady","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2lrFPIa4EqYFcUaQT9PSy8HpqELE7MHUrp8rFmSM22ILIRc6J","context":"http://www.kittenlady.org/"},
+       {"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kitten_in_Rizal_Park%2C_Manila.jpg/1200px-Kitten_in_Rizal_Park%2C_Manila.jpg","snippet":"Kitten - Wikipedia","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT949-2idleVaHMqZu1xrEJY6-pWXrnkxuFxvct5e7ZhRFsvqO04g","context":"https://en.wikipedia.org/wiki/Kitten"},
+       {"url":"http://kittenrescue.org/wp-content/uploads/2017/03/KittenRescue_KittenCareHandbook.jpg","snippet":"Kitten Rescue • Los Angeles","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIjIof0WVNnbCexfYj9P8gwWYXNkK7KX7pNI4NEQazSYqsqv6y1A","context":"http://kittenrescue.org/"}, ...
+       ]</code><br/><br/>
+     <code>[
+       {"url":"https://static1.squarespace.com/static/54e8ba93e4b07c3f655b452e/t/56c2a04520c64707756f4267/1493764650017/","snippet":"Kitten Lady","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2lrFPIa4EqYFcUaQT9PSy8HpqELE7MHUrp8rFmSM22ILIRc6J","context":"http://www.kittenlady.org/"},
+       {"url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kitten_in_Rizal_Park%2C_Manila.jpg/1200px-Kitten_in_Rizal_Park%2C_Manila.jpg","snippet":"Kitten - Wikipedia","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT949-2idleVaHMqZu1xrEJY6-pWXrnkxuFxvct5e7ZhRFsvqO04g","context":"https://en.wikipedia.org/wiki/Kitten"},
+       {"url":"http://kittenrescue.org/wp-content/uploads/2017/03/KittenRescue_KittenCareHandbook.jpg","snippet":"Kitten Rescue • Los Angeles","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIjIof0WVNnbCexfYj9P8gwWYXNkK7KX7pNI4NEQazSYqsqv6y1A","context":"http://kittenrescue.org/"}, ...
+       ]</code><br/><br/>
+     <code>[
+       {"term":"kitten","when":"2017-07-25T06:23:21.559Z"},
+       {"term":"kitten","when":"2017-07-25T07:11:24.893Z"},
+       {term":"kitten","when":"2017-07-25T07:11:27.096Z"},
+       {"term":"holala","when":"2017-07-25T07:11:28.485Z"}
+       ]</code>
+   </body>
+
+</html>
+
