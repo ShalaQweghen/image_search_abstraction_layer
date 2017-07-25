@@ -7,13 +7,17 @@
 
 var fs = require('fs');
 var express = require('express');
-var mongo = require('mongodb').MongoClient;
 var request = require('request');
+var mongoose = require('mongoose');
 
+var Search = require("./models/search");
 var GoogleImageSearch = require("./google-image-search");
+
 var search_options = GoogleImageSearch.options;
 
 var app = express();
+
+mongoose.connect(process.env.DB_URL)
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
@@ -46,73 +50,29 @@ app.route('/')
 
 app.get('/api/imagesearch/:keyword', function(req, res) {
   var searchKeyword = req.params.keyword;
-  
-  mongo.connect("mongodb://" + process.env.MONGO_USER + ":" + process.env.MONGO_PASS + "@ds141232.mlab.com:41232/urls", function(err, db) {
-    if (err) {
-      console.log(err);
-    }
-    db.collection("searches").insert({term: searchKeyword, when: new Date(Date.now())}, function(err) {
-      if (err) {
-        return console.log(err);
-      }
-      
-      db.close();
-    })
-  });
-  
-  var offset = req.query.offset;
-  
-  search_options.url = GoogleImageSearch.getSearchURL(searchKeyword);
-  
+  var offset = req.query.offset | 20;
   var images = [];
   
-  request(search_options, function(err, response, body) {
-    if (err) {
-      console.log(err);
-    }
-
-    GoogleImageSearch.getResults(body, function(err, results) {
-      if (err) {
-        return console.log(err);
-      }
-
-      for (var i = 0; i < results.length; i++) {
-        var obj = {};
-        obj.url = results[i].ou;
-        obj.snippet = results[i].pt;
-        obj.thumbnail = results[i].tu;
-        obj.context = results[i].ru;
-        images.push(obj);
-        if (offset && images.length === offset-1) {
-          break;
-        }
-      }
-      res.json(images);
-    });
+  Search.create({term: searchKeyword}, function(err, searchDoc) {
+    if (err) throw new Error("Database malfunction!");
+    
+    GoogleImageSearch.searchAndServeImages(searchKeyword, offset, res);
   });
 });
 
 app.get("/api/latest/imagesearch", function(req, res) {
-  var searches = [];
-  mongo.connect("mongodb://" + process.env.MONGO_USER + ":" + process.env.MONGO_PASS + "@ds141232.mlab.com:41232/urls", function(err, db) {
-    if (err) {
-        console.log(err);
-    }
-    db.collection("searches").find({}, {_id: 0}).toArray(function(err, docs) {
-      if (err) {
-        return console.log(err);
+  var recentSearches = [];
+  
+  Search.find({}, {_id: false, __v: false}, function(err, searchDocs) {
+    if (err) throw new Error("Database malfunction!");
+    
+    searchDocs.forEach(function(doc) {
+      if (GoogleImageSearch.searchedToday(doc)) {
+        recentSearches.push(doc);
       }
-
-      db.close();
-      
-      docs.forEach(function(doc) {
-        if (new Date(doc.when).toDateString() === new Date(Date.now()).toDateString()) {
-          searches.push(doc);
-        }
-      });
-      
-      res.json(searches);
     });
+    
+    res.json(recentSearches);
   });
 });
 
